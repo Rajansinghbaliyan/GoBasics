@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	sll "github.com/emirpasic/gods/lists/singlylinkedlist"
 	"net/http"
 	"reflect"
 )
@@ -61,6 +62,11 @@ func fetchPokemonInRange(url string, start int, end int) {
 		tempUrl := fmt.Sprintf("%s%d",url,c)
 		go fetchPokemonConcurrently(tempUrl,pokemonCh,errorCh)
 	}
+
+	list := sll.New()
+	list.Add(getField(pokemonCh,"Name"))
+
+	fmt.Printf("%v",list)
 
 	for c := start; c < end; c++ {
 		fmt.Printf("%v\n", getField(pokemonCh, "Name"))
